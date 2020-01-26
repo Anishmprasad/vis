@@ -33428,7 +33428,7 @@ return /******/ (function(modules) { // webpackBootstrap
     return this.selectionHandler.selectNodes.apply(this.selectionHandler, arguments);
   };
   Network.prototype.selectEdges = function () {
-    return null;//this.selectionHandler.selectEdges.apply(this.selectionHandler, arguments);
+    return this.options.hoverEdges ? this.selectionHandler.selectEdges.apply(this.selectionHandler, arguments) : null
   };
   Network.prototype.unselectAll = function () {
     this.selectionHandler.unselectAll.apply(this.selectionHandler, arguments);
@@ -46359,7 +46359,8 @@ return /******/ (function(modules) { // webpackBootstrap
         multiselect: false,
         selectable: true,
         selectConnectedEdges: true,
-        hoverConnectedEdges: true
+        hoverConnectedEdges: true,
+        hoverEdges : false
       };
       util.extend(this.options, this.defaultOptions);
 
@@ -46372,7 +46373,7 @@ return /******/ (function(modules) { // webpackBootstrap
       key: 'setOptions',
       value: function setOptions(options) {
         if (options !== undefined) {
-          var fields = ['multiselect', 'hoverConnectedEdges', 'selectable', 'selectConnectedEdges'];
+          var fields = ['multiselect', 'hoverConnectedEdges','hoverEdges', 'selectable', 'selectConnectedEdges'];
           util.selectiveDeepExtend(fields, this.options, options);
         }
       }
@@ -46946,8 +46947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
         if (object !== undefined) {
           if (object.hover === false) {
-            if(object instanceof _Node2['default'])
-            {
+            if(object instanceof _Node2['default'] || this.options.hoverEdges){
               object.hover = true;
               this._addToHover(object);
               hoverChanged = true;
@@ -50096,6 +50096,7 @@ return /******/ (function(modules) { // webpackBootstrap
       selectable: { boolean: bool },
       selectConnectedEdges: { boolean: bool },
       hoverConnectedEdges: { boolean: bool },
+      hoverEdges: { boolean: bool },
       tooltipDelay: { number: number },
       zoomView: { boolean: bool },
       __type__: { object: object }
@@ -50501,6 +50502,7 @@ return /******/ (function(modules) { // webpackBootstrap
       selectable: true,
       selectConnectedEdges: true,
       hoverConnectedEdges: true,
+      hoverEdges: false,
       tooltipDelay: [300, 0, 1000, 25],
       zoomView: true
     },
